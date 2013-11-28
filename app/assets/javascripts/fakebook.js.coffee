@@ -1,6 +1,6 @@
 #= require fakebookcache
 
-@Fakebook = (( global, doc, $) ->
+@Fakebook = ((window, doc, $) ->
   fakebook = {}
   _FB = null
 
@@ -11,45 +11,46 @@
     console.log('init called')
 
   fakebook.login = (callback = null, options = {}) ->
-    _FB.login(callback, options)
+    path = 'login'
+    cached = fakebook.cache.fetch(path)
+    if cached == undefined
+      _FB.login(responseWrapper(path, callback), options)
+    else
+      callback.call(window, cached)
+
     console.log('login called')
 
-  fakebook.logout = ->
-    console.log('logout called')
-
   fakebook.getLoginStatus = (callback, remote = false) ->
-    if true
-      _FB.getLoginStatus(callback, remote)
-
+    path = 'getLoginStatus'
+    cached = fakebook.cache.fetch(path)
+    if cached == undefined
+      _FB.getLoginStatus(responseWrapper(path, callback), remote)
     else
-      console.log('get login status called')
-
+      callback.call(window, cached)
 
   fakebook.api = (path, params = {}, method = 'get', callback = ->) ->
-
     if typeof params is 'function'
       callback = params
       params = {}
-    
-    if true
+
+    cached = fakebook.cache.fetch(path)
+    if cached == undefined
       _FB.api(path, params, method, responseWrapper(path, callback))
     else
-      callback.call(global, result)
+      callback.call(window, cached)
 
   responseWrapper = (url, callback) ->
     (response) ->
       fakebook.cache.store(url, response)
       callback.call(window, response)
-      
 
   replaceFbAsyncInit = ->
     fakebook._fbAsyncInit = window.fbAsyncInit
     window.fbAsyncInit = ->
       _FB = $.extend({}, window.FB)
       $.extend(window.FB, window.Fakebook)
-      # window.FB = FakeBook
       Fakebook._fbAsyncInit()
- 
+
   # patchJqueryGetScript = ->
   #   _getScript = $.getScript
   #   $.getScript = (url, cb = ->) ->
@@ -62,4 +63,4 @@
   replaceFbAsyncInit()
   fakebook
 
-)( window, document, $)
+)(window, document, $)

@@ -1,23 +1,22 @@
 class @FakebookCache
 
   constructor: ->
-    console.log('CACHE')
-    @cache = window._rawFakebookCache
-    # Check if we have an injected cache 
-  
-  store: (path, response) ->
-    @cache[path] = response
+    @cache = window._fakebookCache
 
   fetch: (path) ->
+    key = @generateKey(path)
+    @cache[key]
 
-  store: (url, response) ->
-    key = @generateKey(url)
+  store: (path, response) ->
+    key = @generateKey(path)
+    @cache[key] = response
+    
     $.ajax
       type: "POST"
-      url: "/fakebook/cache/store"
+      path: "/fakebook/cache/store"
       data:
         key: key
         response: response
   
-  generateKey: (url) ->
-    url.replace(/[^0-9A-Za-z.\-]/g,"_")
+  generateKey: (path) ->
+    path.replace(/[^0-9A-Za-z.\-]/g,"_")
