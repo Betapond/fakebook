@@ -5,8 +5,8 @@ module Fakebook
   module Cache
     class Persist
 
-      def initialize(url, response)
-        @url = url
+      def initialize(key, response)
+        @key = key
         @response = response
         @path = Fakebook::Cache.cache_directory
       end
@@ -16,7 +16,7 @@ module Fakebook
           FileUtils.mkdir_p(@path)
         end
         
-        path = File.join(@path, @url + '.json')
+        path = File.join(@path, @key + '.json')
         File.open(path, 'w') { |file| file.write(@response.to_json) }
       end
     end

@@ -23,13 +23,7 @@
 
     else
       console.log('get login status called')
-      callback.call(global,
-        status: "connected"
-        authResponse:
-          accessToken: "..."
-          expiresIn: "..."
-          signedRequest: "..."
-          userID: "...")
+
 
   fakebook.api = (path, params = {}, method = 'get', callback = ->) ->
 
@@ -38,10 +32,15 @@
       params = {}
     
     if true
-      _FB.api(path, params, method, callback)
+      _FB.api(path, params, method, responseWrapper(path, callback))
     else
       callback.call(global, result)
 
+  responseWrapper = (url, callback) ->
+    (response) ->
+      fakebook.cache.store(url, response)
+      callback.call(window, response)
+      
 
   replaceFbAsyncInit = ->
     fakebook._fbAsyncInit = window.fbAsyncInit
@@ -51,11 +50,11 @@
       # window.FB = FakeBook
       Fakebook._fbAsyncInit()
  
-  patchJqueryGetScript = ->
-    _getScript = $.getScript
-    $.getScript = (url, cb = ->) ->
-      unless /connect\.facebook\.net/.test(url)
-        _getScript(url, cb)
+  # patchJqueryGetScript = ->
+  #   _getScript = $.getScript
+  #   $.getScript = (url, cb = ->) ->
+  #     unless /connect\.facebook\.net/.test(url)
+  #       _getScript(url, cb)
 
 
   # patchJqueryGetScript()

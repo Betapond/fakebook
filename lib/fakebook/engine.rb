@@ -3,12 +3,6 @@ module Fakebook
     engine_name "fakebook"
     isolate_namespace Fakebook
 
-  
-      initializer :assets do |config|
-        Rails.application.config.assets.precompile += %w( fakebook/fakebook.js )
-      end
-    
-
     initializer "fakebook.configure_rails_initialization" do |app|
       app.middleware.use Fakebook::DataInjectorMiddleware
     end
