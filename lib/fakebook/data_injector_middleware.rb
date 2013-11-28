@@ -7,8 +7,8 @@ module Fakebook
     def call(env)
       status, headers, response = @app.call(env)
 
-      if text_html?(headers) && env['REQUEST_PATH'] != "/fakebook/cache/store" 
-        response.body = response.body.sub!(/<head.*?>/, "\\0 <script id='fakebook-cache'>var win = 'big one'</script>")
+      if text_html?(headers) && response.body =~ /<head.*?>/
+        response.body = response.body.sub!(/<head.*?>/, "\\0 <script id='fakebook-cache'>var _fakebookCache = #{Cache.dump_to_json}</script>")
         response.body = response.body.sub!(/<\/head.*?>/, "<script src='/assets/fakebook.js'></script> \\0")
       end
       

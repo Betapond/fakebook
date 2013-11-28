@@ -52,13 +52,12 @@ RSpec.configure do |config|
       
       example.run
 
-      Fakebook::Cache.cache_directory = 'spec/fakebook_cache'
-      @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
-      FileUtils.rm_rf @directory 
+      # Fakebook::Cache.cache_directory = 'spec/fakebook_cache'
+      # @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
+      # FileUtils.rm_rf @directory 
 
-      Fakebook::Cache.cache_directory = 'spec/fakebook_cache_different'
-      @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
-      FileUtils.rm_rf @directory 
-
+      # Fakebook::Cache.cache_directory = 'spec/fakebook_cache_different'
+      # @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
+      # FileUtils.rm_rf @directory 
   end
 end

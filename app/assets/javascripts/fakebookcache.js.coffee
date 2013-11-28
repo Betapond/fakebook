@@ -14,7 +14,7 @@ class @FakebookCache
     key = @generateKey(url)
     $.ajax
       type: "POST"
-      url: "fakebook/cache/store"
+      url: "/fakebook/cache/store"
       data:
         key: key
         response: response
