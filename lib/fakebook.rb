@@ -1,4 +1,5 @@
 require "fakebook/engine"
+require "fakebook/data_injector_middleware"
 require "fakebook/cache"
 require "fakebook/cache/persist"
 

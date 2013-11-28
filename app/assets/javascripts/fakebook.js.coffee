@@ -1,26 +1,26 @@
-#= require jquery
 #= require fakebookcache
 
 @Fakebook = (( global, doc, $) ->
-  self = {}
+  fakebook = {}
   _FB = null
 
-  self.cache = new FakebookCache
+  fakebook.cache = new FakebookCache
 
-  self.init = (params) ->
+  fakebook.init = (params) ->
     _FB.init(params)
     console.log('init called')
 
-  self.login = (callback = null, options = {}) ->
+  fakebook.login = (callback = null, options = {}) ->
     _FB.login(callback, options)
     console.log('login called')
 
-  self.logout = ->
+  fakebook.logout = ->
     console.log('logout called')
 
-  self.getLoginStatus = (callback, remote = false) ->
+  fakebook.getLoginStatus = (callback, remote = false) ->
     if true
       _FB.getLoginStatus(callback, remote)
+
     else
       console.log('get login status called')
       callback.call(global,
@@ -31,7 +31,7 @@
           signedRequest: "..."
           userID: "...")
 
-  self.api = (path, params = {}, method = 'get', callback = ->) ->
+  fakebook.api = (path, params = {}, method = 'get', callback = ->) ->
 
     if typeof params is 'function'
       callback = params
@@ -44,7 +44,7 @@
 
 
   replaceFbAsyncInit = ->
-    self._fbAsyncInit = window.fbAsyncInit
+    fakebook._fbAsyncInit = window.fbAsyncInit
     window.fbAsyncInit = ->
       _FB = $.extend({}, window.FB)
       $.extend(window.FB, window.Fakebook)
@@ -61,6 +61,6 @@
   # patchJqueryGetScript()
 
   replaceFbAsyncInit()
-  self
+  fakebook
 
 )( window, document, $)
