@@ -23,3 +23,21 @@ production:
   database: db/production.sqlite3
   pool: 5
   timeout: 5000
+
+sexyjordan:
+  adapter: postgresql
+  encoding: utf8
+  host: localhost
+  database: fakebook_sexyjordan
+  port: 5433
+  username: postgres
+  password: 1234
+
+sexyjordan_test:
+  adapter: postgresql
+  encoding: utf8
+  host: localhost
+  port: 5433
+  database: fakebook_sexyjordan_test
+  username: postgres
+  password: 1234
