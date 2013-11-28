@@ -1,9 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] = case ENV["RAILS_ENV"]
-when nil, 'development', 'test' then 'test'
-else 
-  ENV["RAILS_ENV"] + '_test'
-end
+                   when nil, 'development', 'test' then 'test'
+                   else 
+                     ENV["RAILS_ENV"] + '_test'
+                   end
 
 require File.expand_path("../test_app/config/environment", __FILE__)
 require 'rspec/rails'
@@ -40,4 +40,25 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.around(:each) do |example|
+      Fakebook::Cache.cache_directory = 'spec/fakebook_cache_different'
+      @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
+      FileUtils.rm_rf @directory 
+
+      Fakebook::Cache.cache_directory = 'spec/fakebook_cache'
+      @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
+      FileUtils.rm_rf @directory 
+      
+      example.run
+
+      Fakebook::Cache.cache_directory = 'spec/fakebook_cache'
+      @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
+      FileUtils.rm_rf @directory 
+
+      Fakebook::Cache.cache_directory = 'spec/fakebook_cache_different'
+      @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
+      FileUtils.rm_rf @directory 
+
+  end
 end

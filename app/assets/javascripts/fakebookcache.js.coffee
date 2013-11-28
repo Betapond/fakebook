@@ -11,7 +11,7 @@ class @FakebookCache
   fetch: (path) ->
 
   store: (url, response) ->
-    key = generateKey(url)
+    key = @generateKey(url)
     $.ajax
       type: "POST"
       url: "fakebook/cache/store"
@@ -20,4 +20,4 @@ class @FakebookCache
         response: response
   
   generateKey: (url) ->
-    url.replace(/[^0-9A-Za-z.\-]/g,"_");
+    url.replace(/[^0-9A-Za-z.\-]/g,"_")
