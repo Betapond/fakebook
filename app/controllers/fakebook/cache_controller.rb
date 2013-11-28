@@ -1,9 +1,11 @@
-class Fakebook::CacheController < ApplicationController
+module Fakebook
+  class CacheController < ApplicationController
 
-  def store
-    url = params[:url]
-    response = params[:response]
-    
-    render nothing: true    
+    def store
+      item = Cache::Persist.new(params[:url], params[:response]) 
+      item.save
+
+      render nothing: true    
+    end
   end
 end

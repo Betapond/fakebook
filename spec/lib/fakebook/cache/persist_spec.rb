@@ -4,11 +4,16 @@ module Fakebook
   describe Cache::Persist do
     
     before :each do
-      FileUtils.rm_rf Rails.root.join(Fakebook::Cache.cache_directory)
+      Fakebook::Cache.cache_directory = 'spec/fakebook_cache'
+      @directory = Rails.root.join('..', '..', Fakebook::Cache.cache_directory)
+
+      FileUtils.rm_rf @directory
     end
      
-    it 'exists' do
-      
+    it 'saves the item' do
+      item = Cache::Persist.new('/me?fields=name', { :name => 'Jordan Rogers-Smith', id: 123456789 })
+      item.save
+      expect(Dir[@directory].empty?).to be false
     end 
     
   end
