@@ -7,13 +7,13 @@ require "fakebook/version"
 Gem::Specification.new do |s|
   s.name        = "fakebook"
   s.version     = Fakebook::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Fakebook."
+  s.authors     = ["Jordan Rogers-Smith"]
+  s.email       = ["jordan.rogers-smith@betapond.com"]
+  s.homepage    = "www.jordanrs.co.uk"
+  s.summary     = "Capture real response from facebook and replay them in future tests"
   s.description = "TODO: Description of Fakebook."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 4.0.0"
 
