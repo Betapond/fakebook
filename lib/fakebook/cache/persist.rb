@@ -6,7 +6,7 @@ module Fakebook
     class Persist
 
       def initialize(key, response)
-        @key = key
+        @key = key.gsub('"', '')
         @response = response
         @path = Fakebook::Cache.cache_directory
       end

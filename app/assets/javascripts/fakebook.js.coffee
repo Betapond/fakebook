@@ -13,7 +13,7 @@
   fakebook.login = (callback = null, options = {}) ->
     path = 'login'
     cached = fakebook.cache.fetch(path)
-    if cached == undefined
+    if cached == undefined || cached.status != 'connected'
       _FB.login(responseWrapper(path, callback), options)
     else
       callback.call(window, cached)
@@ -23,8 +23,8 @@
   fakebook.getLoginStatus = (callback, remote = false) ->
     path = 'getLoginStatus'
     cached = fakebook.cache.fetch(path)
-    if cached == undefined
-      _FB.getLoginStatus(responseWrapper(path, callback), remote)
+    if cached == undefined || cached.status != 'connected'
+      _FB.getLoginStatus(responseWrapper(path, callback, {}, true), remote)
     else
       callback.call(window, cached)
 
@@ -33,15 +33,25 @@
       callback = params
       params = {}
 
-    cached = fakebook.cache.fetch(path)
+    if typeof method is 'function'
+      callback = method
+      method = 'get'
+
+    cached = fakebook.cache.fetch(path, params)
     if cached == undefined
-      _FB.api(path, params, method, responseWrapper(path, callback))
+      # deal with FQL
+      if typeof path == 'object'
+        _FB.api(path, responseWrapper(path, callback))
+      else if path == 'search'
+        _FB.api(path, params, responseWrapper(path, callback, params))
+      else
+        _FB.api(path, params, method, responseWrapper(path, callback))
     else
       callback.call(window, cached)
 
-  responseWrapper = (url, callback) ->
+  responseWrapper = (url, callback, params = {}, force = false) ->
     (response) ->
-      fakebook.cache.store(url, response)
+      fakebook.cache.store(url, response, params, force)
       callback.call(window, response)
 
   replaceFbAsyncInit = ->
