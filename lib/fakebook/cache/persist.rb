@@ -8,7 +8,7 @@ module Fakebook
       def initialize(key, response)
         @key = key.gsub('"', '')
         @response = response
-        @path = Fakebook::Cache.cache_directory
+        @path = File.join(Fakebook::Cache.cache_directory, Fakebook.cache_subfolder)
       end
 
       def save

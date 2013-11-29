@@ -5,15 +5,17 @@ require "fakebook/cache/persist"
 
 module Fakebook
 
+  mattr_accessor :cache_subfolder
   
-  extend self
-  def configure
+  def self.configure
     yield self
   end
   
+  def self.cache_subfolder
+    @@cache_subfolder || ''
+  end
 
-
-  def cache_directory=(path)
+  def self.cache_directory=(path)
     Fakebook::Cache.cache_directory = path
   end
 
