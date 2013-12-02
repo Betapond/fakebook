@@ -42,7 +42,7 @@
       # deal with FQL
       if typeof path == 'object'
         _FB.api(path, responseWrapper(path, callback))
-      else if path == 'search'
+      else if /search|targetingsentence|reachestimate/.test(path)
         _FB.api(path, params, responseWrapper(path, callback, params))
       else
         _FB.api(path, params, method, responseWrapper(path, callback))
