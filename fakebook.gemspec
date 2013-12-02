@@ -11,11 +11,12 @@ Gem::Specification.new do |s|
   s.email       = ["jordan.rogers-smith@betapond.com"]
   s.homepage    = "www.jordanrs.co.uk"
   s.summary     = "Capture real response from facebook and replay them in future tests"
-  s.description = "TODO: Description of Fakebook."
+  s.description = "Fakebook captures JavaScript SDK requests to facebook and caches them to be reused later. "
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 4.0.0"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec-rails", "~> 2.12.2"
 end
