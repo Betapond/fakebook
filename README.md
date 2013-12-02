@@ -9,19 +9,19 @@ Our current app has alot of client requests to the facebook api. During our feat
 ##Installation
 
 1) Add the following to your ``Gemfile``
-
+```ruby
   group :test do 
     ...
     gem 'fakebook', github: 'Betapond/fakebook'
     ...
   end
-
+```
 ###IMPORTANT
 
 Make sure this gem is in your test group so it is not loaded in production / development.
 
 2) Add the following to your spec helper
-
+```ruby
   require 'fakebook'
 
   ...
@@ -29,21 +29,20 @@ Make sure this gem is in your test group so it is not loaded in production / dev
   Fakebook.configure do |config|
     config.cache_directory = 'spec/fakebook_cache' 
   end
-
+```
 3) Its best to cache each test run on its own and the easiest way to do this is using an RSpec around block to automatically store each spec in its own subdirectory
-
+```ruby
   config.around(:each) do |example|
     Fakebook.cache_subfolder = example.metadata[:full_description].split(/\s+/, 2).join("/").underscore.gsub(/[^\w\/]+/, "_")
     example.run
   end
-
+```
 ##Turn off Fakebook
 
 If you don't want to use the Fakebook cache it can be turned off globally with
-
+```ruby
   Fakebook.turn_off!
-  
-
+```
 ##TODO
 
 - Make turn_off use environment variable as well
