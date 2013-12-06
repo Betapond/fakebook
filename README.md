@@ -47,6 +47,6 @@ If you don't want to use the Fakebook cache it can be turned off globally with
 
 - Make turn_off use environment variable as well
 - Make turn_off be applicable on a per spec basis
-- Add warnings for production and development enviroments
+- Add warnings for production and development environments
 
 This project rocks and uses MIT-LICENSE.

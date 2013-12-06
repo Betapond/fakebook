@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Fakebook::VERSION
   s.authors     = ["Jordan Rogers-Smith"]
   s.email       = ["jordan.rogers-smith@betapond.com"]
-  s.homepage    = "www.jordanrs.co.uk"
+  s.homepage    = "http://www.jordanrs.co.uk"
   s.summary     = "Capture real response from facebook and replay them in future tests"
   s.description = "Fakebook captures JavaScript SDK requests to facebook and caches them to be reused later. "
 
